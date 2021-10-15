@@ -12,7 +12,7 @@ output="$(timeout 5m poetry run python task.py)"
 end=$(date +%s)
 
 echo "$output"
-[ $((end - start)) -lt 40 ] && exit 1
+[ $((end - start)) -lt 30 ] && exit 1
 echo "$output" | grep '调用成功' 1>/dev/null || exit 1
 echo "$output" | grep -iE 'error|except' 1>/dev/null && exit 1
 

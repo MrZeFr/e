@@ -10,10 +10,19 @@ EXECUTOR_POOL_SIZE = 10
 
 
 def config(path, data=None):
-    with open(path, mode="r+") as conf:
-        if not data:
+    if not data:
+        with open(path, mode="r") as conf:
             return json.load(conf)
-        json.dump(data, conf, sort_keys=True, indent=4)
+    
+    # fast-fail
+    json.loads(json.dumps(data))
+    with open(path, mode="w") as conf:
+        json.dump(data, conf)
+
+    # with open(path, mode="r+") as conf:
+    #     if not data:
+    #         return json.load(conf)
+    #     json.dump(data, conf, sort_keys=True, indent=4)
 
 
 def get_access_token(app):
